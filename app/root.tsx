@@ -9,7 +9,8 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
-
+import { useEffect } from "react";
+import { usePuterStore } from "~/lib/puter";
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -24,6 +25,37 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+   const { init ,error,isLoading} = usePuterStore();
+  
+    useEffect(() => {
+      async function loading(){
+        await init();
+      }
+      loading();
+    }, [init]);
+    if(error != null){
+       console.log("fuckoff"); 
+    }
+    if (isLoading) {
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body className="flex items-center justify-center h-screen">
+        <div className="loader-circle-3 w-screen h-screen"></div>
+
+        <script src="https://js.puter.com/v2/"></script>
+        
+        <ScrollRestoration />
+        <Scripts />
+      </body>
+    </html>
+  ); // stop rendering root content
+}
   return (
     <html lang="en">
       <head>
@@ -33,6 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <script src="https://js.puter.com/v2/"></script>
         {children}
         <ScrollRestoration />
         <Scripts />
