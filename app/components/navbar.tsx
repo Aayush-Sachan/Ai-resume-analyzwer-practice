@@ -6,7 +6,7 @@ export default function Navbar(){
             <Link to="/" className='text-2xl font-bold text-gradient'>
                 ResumeMind
             </Link>
-            <Link to="/" className='primary-button w-fit'>
+            <Link to="/upload" className='primary-button w-fit'>
                 Upload
             </Link>
         </nav>
