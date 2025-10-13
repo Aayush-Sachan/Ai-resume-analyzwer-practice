@@ -1,4 +1,5 @@
 import React, { useState, type FormEvent } from 'react'
+import type { Route } from "./+types/home";
 import Navbar from '~/components/navbar'
 import Fileuploader from '~/components/fileuploader'
 import { usePuterStore } from '~/lib/puter'
@@ -47,7 +48,7 @@ const upload = () => {
             jobdesc: data.job_description,
             feedback:"",
         }
-        kv.set(`resume:${uuid}`,JSON.stringify(data));
+        kv.set(`resume:${uuid}`,JSON.stringify(finaldata));
         setstatustext("analyzing your data");
         const jobTitle=data.Job_title as string;
         const jobDescription=data.job_description as string;
@@ -61,13 +62,14 @@ const upload = () => {
             : feedback.message.content[0].text;
         
         finaldata.feedback= JSON.parse(feedbackText);
-        await kv.set(`resume:${uuid}`, JSON.stringify(data));
+        await kv.set(`resume:${uuid}`, JSON.stringify(finaldata));
         setstatustext('Analysis complete, redirecting...');
         console.log(finaldata.feedback);
         setisprocessing(false);
 
         setstatustext("");
-        // navigate(`/resume/${uuid}`);
+        navigate(`/resume/${uuid}`);
+        
 
 
     }
