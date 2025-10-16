@@ -2,10 +2,12 @@ import type { aI } from 'node_modules/react-router/dist/development/routeModules
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { usePuterStore } from '~/lib/puter';
+import Scorecard from '../components/scorecard'
 export const meta =()=>([
     {title:"resume|feedback"},
     {name:"description",content:"feedback page"},
 ])
+
 
 const resume = () => {
     const {id}=useParams();
@@ -36,8 +38,20 @@ const resume = () => {
   <div>
     {data == null ? (
       <p>It is loading man</p>
-    ) : (
-      <div>{data.overallScore}</div>
+    ) : (<>
+      <div className='w-screen flex flex-col gap-4 text-center bg-blue-50 '>
+        <Scorecard data={data} topic="ATS"/>
+        <Scorecard data={data} topic="content"/>
+        <Scorecard data={data} topic="skills"/>
+        <Scorecard data={data} topic="structure"/>
+        <Scorecard data={data} topic="toneAndStyle"/> 
+        <div className= {` w-full py-6  text-white text-3xl font-bold ${(data.overallScore>65?"bg-green-500":"bg-red-500")}`} >
+          Overallscore: {data.overallScore}
+        </div>
+      </div>
+      
+
+      </>
     )}
   </div>
 );
